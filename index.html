@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>写真集</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+            font-size: 1.2em;
+        }
+
+        html,
+        body,
+        #container {
+            height: 100%;
+        }
+
+        #container {
+            display: flex;
+            /* establish flex container */
+            flex-direction: column;
+            /* stack flex items vertically */
+            justify-content: center;
+            /* center items vertically, in this case */
+            align-items: center;
+            /* center items horizontally, in this case */
+            height: 100%;
+            /* border: 1px solid black; */
+        }
+
+        .box {
+            /* width: 300px; */
+            margin: 0px;
+            text-align: center;
+        }
+
+        img {
+
+            position: absolute;
+            z-index: -99;
+        }
+        #image{
+            width: 100px;
+            
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="container">
+
+        <div class="box">
+            <p id="time">DIV #1</p>
+        </div>
+
+        <div class="box">
+            <p>Without a 写真集 Release</p>
+        </div>
+        <div class="box">
+            <p>Who's Next?</p>
+        </div>
+
+        <div class="box">
+            <img id="image">
+            <img id="image">
+        </div>
+       
+   
+
+
+    </div>
+
+
+    <script>
+        Date.prototype.addHours = function (h) {
+            this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+            return this;
+        }
+        function timeDiffCalc(dateFuture, dateNow) {
+            //console.log("date now", dateFuture);
+            let diffInMilliSeconds = Math.abs(dateFuture - dateNow) / 1000;
+
+            // calculate days
+            const days = Math.floor(diffInMilliSeconds / 86400);
+            diffInMilliSeconds -= days * 86400;
+            //console.log('calculated days', days);
+
+            // calculate hours
+            const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
+            diffInMilliSeconds -= hours * 3600;
+            // console.log('calculated hours', hours);
+
+            // calculate minutes
+            const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+            diffInMilliSeconds -= minutes * 60;
+            // console.log('minutes', minutes);
+
+            let seconds = Math.floor(diffInMilliSeconds);
+
+
+
+            let difference = '';
+            if (days > 0) {
+                difference += (days === 1) ? `${days} day, ` : `${days} days, `;
+            }
+
+            difference += (hours === 1) ? `${hours} hour, ` : `${hours} hours, `;
+
+            difference += (hours === 1) ? `${minutes} minute,` : `${minutes} minutes,`;
+
+            difference += (seconds === 1) ? ` ${seconds} second` : ` ${seconds} seconds`;
+
+            return difference;
+        }
+
+
+
+
+
+
+
+        function getDate() {
+            let w = new Date();
+            let offset = w.getTimezoneOffset() / 60;
+            let r = timeDiffCalc(w.addHours(9 + offset), new Date(2021, 3, 27));
+            document.getElementById("time").innerText = r;
+        }
+        getDate();
+
+     
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+
+
+
+
+
+        setInterval(() => {
+            getDate();
+
+
+
+        }, 500);
+
+    </script>
+
+
+
+
+</body>
+
+</html>
