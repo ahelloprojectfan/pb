@@ -11,6 +11,7 @@
             color: #fff;
             overflow: hidden;
             font-size: 1.2em;
+            text-shadow: 1px 1px rgb(116, 114, 114);
         }
 
         html,
@@ -39,13 +40,10 @@
         }
 
         img {
-
+            top: 0px;
             position: absolute;
             z-index: -99;
-        }
-        #image{
-            width: 100px;
-            
+            width: 90px;
         }
     </style>
 </head>
@@ -67,13 +65,83 @@
         </div>
 
 
-   
+
 
 
     </div>
 
-
+    <script src="idols.js"></script>
     <script>
+        let mimSpeed = 1;
+        let maxSpeed = 4;
+
+        class IdolPic {
+            constructor(name, imgURL, groups, domElement) {
+                this.name = name;
+                this.imgURL = imgURL
+                this.groups = groups;
+                this.domElement = domElement;
+
+                this.x = 0;
+                this.y = 0;
+                this.speedX = getRandomInt(mimSpeed, maxSpeed);
+                this.speedY = 1;
+
+
+                this.setUpImg();
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.domElement.style.left = this.x + "px";
+
+
+                if (this.x > window.innerWidth + 130) {
+                    this.x = -100;
+                    this.y = getRandomInt(0, window.innerHeight - 100);
+                    this.speedX = getRandomInt(mimSpeed, maxSpeed);
+                    this.domElement.src = idols[getRandomInt(0, idols.length)].img;
+                    this.domElement.style.top = this.y + "px";
+                }
+
+            }
+            setUpImg() {
+
+                this.domElement.src = this.imgURL;
+                document.body.appendChild(this.domElement);
+
+                this.domElement.style.left = this.x + "px";
+
+                this.y = getRandomInt(0, window.innerHeight - 100);
+                this.domElement.style.top = this.y + "px";
+
+            }
+        }
+
+        let numOfIdols = 3;
+        let idolsArr = [];
+        for (let i = 0; i < numOfIdols; i++) {
+            let rN = getRandomInt(0, idols.length);
+            idolsArr.push(new IdolPic(idols[rN].name, idols[rN].img, idols[rN].groups, document.createElement("img")))
+
+        }
+
+
+
+        console.log(idolsArr);
+
+
+
+
+     
+
+
+        function doit() {
+            for (let idolU of idolsArr) { idolU.update() }
+            requestAnimationFrame(doit);
+        }
+
+        requestAnimationFrame(doit);
         Date.prototype.addHours = function (h) {
             this.setTime(this.getTime() + (h * 60 * 60 * 1000));
             return this;
@@ -129,7 +197,7 @@
         }
         getDate();
 
-     
+
 
         function getRandomInt(min, max) {
             min = Math.ceil(min);
