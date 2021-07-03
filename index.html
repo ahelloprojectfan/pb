@@ -45,6 +45,26 @@
             z-index: -99;
             width: 90px;
         }
+
+        canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .imgNextIdol {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            top: 30px;
+
+            /* margin-top: -250px; */
+
+            margin-left: -100px;
+        }
     </style>
 </head>
 
@@ -58,10 +78,10 @@
         </div>
 
         <div class="box">
-            <p>Without a 写真集 Release</p>
+            <p id="without">Without a 写真集 Release</p>
         </div>
         <div class="box">
-            <p>Who's Next?</p>
+            <p id="next">Who's Next?</p>
         </div>
 
 
@@ -72,6 +92,17 @@
 
     <script src="idols.js"></script>
     <script>
+
+
+        let newPbRD = [2021, 4, 27];
+        //mei
+        // let newPbRD = [2021, 8, 21];
+        //newPbRD = [2021, 7, 4];
+
+
+        let activateFireworks = false;
+        let nextGirl = "山﨑愛生";
+
         let mimSpeed = 1;
         let maxSpeed = 4;
 
@@ -128,20 +159,13 @@
 
 
 
-        console.log(idolsArr);
+        //console.log(idolsArr);
 
 
 
 
-     
 
 
-        function doit() {
-            for (let idolU of idolsArr) { idolU.update() }
-            requestAnimationFrame(doit);
-        }
-
-        requestAnimationFrame(doit);
         Date.prototype.addHours = function (h) {
             this.setTime(this.getTime() + (h * 60 * 60 * 1000));
             return this;
@@ -153,7 +177,11 @@
             // calculate days
             const days = Math.floor(diffInMilliSeconds / 86400);
             diffInMilliSeconds -= days * 86400;
-            //console.log('calculated days', days);
+
+            if (days === 0) {
+                return "today";
+            }
+
 
             // calculate hours
             const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
@@ -171,7 +199,7 @@
 
             let difference = '';
             if (days > 0) {
-                difference += (days === 1) ? `${days} day, ` : `${days} days, `;
+                difference += (days - 1 === 1) ? `${days - 1} day, ` : `${days - 1} days, `;
             }
 
             difference += (hours === 1) ? `${hours} hour, ` : `${hours} hours, `;
@@ -189,11 +217,27 @@
 
 
 
+
+        newPbRD[1] -= 1;
+
+
+        const isNextIdol = (element) => element.name === nextGirl;
         function getDate() {
             let w = new Date();
             let offset = w.getTimezoneOffset() / 60;
-            let r = timeDiffCalc(w.addHours(9 + offset), new Date(2021, 3, 27));
-            document.getElementById("time").innerText = r;
+
+            //new Date(year, month, day, hours, minutes, seconds, milliseconds)
+            let r = timeDiffCalc(w.addHours(9 + offset), new Date(newPbRD[0], newPbRD[1], newPbRD[2], 0, 0, 0));
+            if (r !== "today") {
+                document.getElementById("time").innerText = r;
+            } else {
+                activateFireworks = true;
+                let index = idols.findIndex(isNextIdol)
+
+                document.querySelector("#without").innerText = idols[index].name + " 写真集";
+                document.querySelector("#next").innerHTML = `Releases Today! <img class="imgNextIdol" src="${idols[index].img}">`;
+            }
+
         }
         getDate();
 
@@ -207,18 +251,97 @@
 
 
 
+        if (activateFireworks === false) {
+            setInterval(() => {
+                getDate();
 
 
-        setInterval(() => {
-            getDate();
+
+            }, 500);
+            function doit() {
+                for (let idolU of idolsArr) { idolU.update() }
+                requestAnimationFrame(doit);
+            }
+
+            requestAnimationFrame(doit);
+        }
 
 
 
-        }, 500);
+
+
+
 
     </script>
 
+    <script src="fireworks.js"></script>
+    <script>
 
+
+        if (activateFireworks) {
+            // use querySelector or getElementById
+            let fireworksContainer = document.querySelector("body");
+
+
+
+            const fireworksConfig = {
+                hue: {
+                    min: 0,
+                    max: 345
+                },
+                delay: {
+                    min: 15,
+                    max: 15
+                },
+                speed: 10,
+                acceleration: 1.2,
+                friction: 0.96,
+                gravity: 1,
+                particles: 90,
+                trace: 3,
+                explosion: 10,
+                autoresize: true,
+                brightness: {
+                    min: 50,
+                    max: 80,
+                    decay: {
+                        min: 0.015,
+                        max: 0.03
+                    }
+                },
+                boundaries: {
+                    top: 50,
+                    bottom: fireworksContainer.clientHeight,
+                    left: 50,
+                    right: fireworksContainer.clientWidth
+                },
+                sound: {
+                    enable: false,
+                    files: [
+                        document.location.origin + document.location.pathname + 'sounds/explosion0.mp3',
+                        document.location.origin + document.location.pathname + 'sounds/explosion1.mp3',
+                        document.location.origin + document.location.pathname + 'sounds/explosion2.mp3'
+                    ],
+                    volume: {
+                        min: 4,
+                        max: 8
+                    }
+                },
+                mouse: {
+                    click: true,
+                    move: false,
+                    max: 3
+                }
+            }
+            // default config
+
+            const fireworks = new Fireworks(fireworksContainer, fireworksConfig)
+
+            fireworks.start()
+
+        }
+
+    </script>
 
 
 </body>
