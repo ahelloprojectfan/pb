@@ -440,14 +440,14 @@ let idols = [
       "name": "江端妃咲",
       "img": "https://i.imgur.com/5y5ZV4t.jpg",
       "group": [
-        "kss"
+        "jj"
       ]
     },
     {
       "name": "豫風瑠乃",
       "img": "https://i.imgur.com/CSnsBbm.jpg",
       "group": [
-        "kss"
+        "tf"
       ]
     },
     {
@@ -468,7 +468,7 @@ let idols = [
       "name": "有澤一華",
       "img": "https://i.imgur.com/fdxcpDJ.jpg",
       "group": [
-        "kss"
+        "jj"
       ]
     },
     {
@@ -483,6 +483,34 @@ let idols = [
       "img": "https://i.imgur.com/YAPe04i.jpg",
       "group": [
         "kss"
+      ]
+    },
+    {
+      "name": "入江里咲",
+      "img": "https://i.imgur.com/PXiGCqT.jpg",
+      "group": [
+        "jj"
+      ]
+    },
+    {
+      "name": "河西結心",
+      "img": "https://i.imgur.com/pq7vejS.jpg",
+      "group": [
+        "tf"
+      ]
+    },
+    {
+      "name": "八木栞",
+      "img": "https://i.imgur.com/Kl7Zxvu.jpg",
+      "group": [
+        "tf"
+      ]
+    },
+    {
+      "name": "福田真琳",
+      "img": "https://i.imgur.com/E6Thaf7.jpg",
+      "group": [
+        "tf"
       ]
     }
   ]
