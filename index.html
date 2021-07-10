@@ -170,7 +170,7 @@
 
         let numOfIdols = 4;
         if ( ! isNaN(parseInt(num))) {
-            numOfIdols = Math.min(parseInt(num), 500);
+            numOfIdols = Math.abs( Math.min(parseInt(num), 500) );
         }
 
         let idolsArr = [];
