@@ -103,6 +103,7 @@
         let urlParams = new URLSearchParams(window.location.search);
         let num = urlParams.get('num');
         let idolURLName = urlParams.get('idol');
+        let isRandom = urlParams.get('random');
 
         let activateFireworks = false;
         let nextGirl = "山﨑愛生";
@@ -116,7 +117,12 @@
 
 
         let idolURLIndex = idols.findIndex(isIdolURL);
-      
+
+        if (isRandom === "true" || isRandom === "1") {
+            idolURLIndex = getRandomInt(0, idols.length);
+            num = getRandomInt(1, 501);
+        }
+
 
         class IdolPic {
             constructor(name, imgURL, groups, domElement) {
@@ -144,12 +150,12 @@
                     this.y = getRandomInt(0, window.innerHeight - 100);
                     this.speedX = getRandomInt(mimSpeed, maxSpeed);
 
-                    if(idolURLIndex === -1){
+                    if (idolURLIndex === -1) {
                         this.domElement.src = idols[getRandomInt(0, idols.length)].img;
-                    }else{
+                    } else {
                         this.domElement.src = idols[idolURLIndex].img;
                     }
-                   
+
 
                     this.domElement.style.top = this.y + "px";
                 }
@@ -169,20 +175,20 @@
         }
 
         let numOfIdols = 4;
-        if ( ! isNaN(parseInt(num))) {
-            numOfIdols = Math.abs( Math.min(parseInt(num), 500) );
+        if (!isNaN(parseInt(num))) {
+            numOfIdols = Math.abs(Math.min(parseInt(num), 500));
         }
 
         let idolsArr = [];
         for (let i = 0; i < numOfIdols; i++) {
             let rN = getRandomInt(0, idols.length);
-            if(idolURLIndex === -1){
+            if (idolURLIndex === -1) {
                 idolsArr.push(new IdolPic(idols[rN].name, idols[rN].img, idols[rN].groups, document.createElement("img")))
-            }else{
-                
+            } else {
+
                 idolsArr.push(new IdolPic(idols[idolURLIndex].name, idols[idolURLIndex].img, idols[idolURLIndex].groups, document.createElement("img")))
             }
-           
+
 
         }
 
