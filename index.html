@@ -90,13 +90,51 @@
 
     </div>
 
-    <script src="idols.js"></script>
+    <!-- <script src="idols.js"></script> -->
+
+    <script>
+        var dataSet = {
+
+        };
+
+    </script>
+    <script src="https://ahelloprojectfan.github.io/sorter/src/js/data/2020-01-01.js"></script>
+
+    <script>
+        let arr = dataSet[dataSetVersion].characterData;
+        idols = [];
+
+        let res = [];
+        for (let ele of arr) {
+            if (!ele) {
+                continue;
+            }
+            if (ele.opts.subkeyaki.includes("mm") ||
+                ele.opts.subkeyaki.includes("jj") ||
+                ele.opts.subkeyaki.includes("angerme") ||
+                ele.opts.subkeyaki.includes("tf") ||
+                ele.opts.subkeyaki.includes("by") ||
+                ele.opts.subkeyaki.includes("kunit")) {
+
+                idols.push(
+                    {
+                        "name": ele.name,
+                        "img": ele.img,
+                        "group": ele.opts.subkeyaki
+                    }
+                )
+
+            }
+        }
+
+      
+    </script>
     <script>
 
 
         //let newPbRD = [2021, 4, 27];
         //mei
-         let newPbRD = [2021, 12, 15];
+        let newPbRD = [2021, 12, 15];
         //newPbRD = [2021, 7, 4];
 
 
@@ -379,12 +417,7 @@
 
     </script>
 
-<script>
-    var dataSet = {
 
-    };
-</script>
-<script src="https://ahelloprojectfan.github.io/sorter/src/js/data/2020-01-01.js"></script>
 
 </body>
 
